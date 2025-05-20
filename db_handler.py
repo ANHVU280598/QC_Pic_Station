@@ -21,19 +21,19 @@ class DBHandler:
 
         self.db_path = resource_path(self.db_path)
     def insert_record(self, input_text, screenshot_path):
-        # conn = sqlite3.connect(self.db_path)
-        # cursor = conn.cursor()
-        # cursor.execute('''
-        #     INSERT INTO work_orders (input_text, image_blob)
-        #     VALUES (?, ?)
-        # ''', (input_text, screenshot_path))
-        # conn.commit()
-        # conn.close()
-        import sqlite3
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
-        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-        print("Tables in DB:", cursor.fetchall())
+        cursor.execute('''
+            INSERT INTO work_orders (input_text, image_blob)
+            VALUES (?, ?)
+        ''', (input_text, screenshot_path))
+        conn.commit()
+        conn.close()
+        # import sqlite3
+        # conn = sqlite3.connect(self.db_path)
+        # cursor = conn.cursor()
+        # cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        # print("Tables in DB:", cursor.fetchall())
 
     def get_all_records(self):
         conn = sqlite3.connect(self.db_path)

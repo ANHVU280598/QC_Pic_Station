@@ -73,7 +73,7 @@ class SearchApp:
 
             lbl = tk.Label(self.results_frame, image=photo)
             lbl.image = photo  # keep a reference to prevent GC
-            lbl.grid(row=idx // 2, column=idx % 1)
+            lbl.grid(row=idx, column=0)
 
     def save_all_images(self):
         if not self.current_images:
