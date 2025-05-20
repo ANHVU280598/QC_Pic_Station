@@ -7,6 +7,7 @@ from onvif import ONVIFCamera
 from zeep.exceptions import Fault
 import time
 from db_handler import DBHandler
+import os
 
 class CameraApp:
     def __init__(self, root, onvif_ip, onvif_port, username, password):

@@ -1,11 +1,11 @@
 import sqlite3
 
 def init_database():
-    db_path = 'data/work_orders.db'
+    db_path = 'work_orders.db'
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     cursor.execute('''
-            CREATE TABLE IF NOT EXISTS work_orders (
+            CREATE TABLE IF NOT EXISTS QC (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 input_text TEXT,
                 image_blob BLOB,

@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
-from cam_app import CameraApp  # <-- your class above saved in camera_app.py
+from cam_app import CameraApp
 from search_app import SearchApp
+from delete_image_tab import DeleteApp
 
 def main():
     root = tk.Tk()
@@ -27,6 +28,9 @@ def main():
     cam_app = CameraApp(tab1, onvif_ip, onvif_port, username, password)
     
     search_app = SearchApp(tab2)
+
+    # After adding tab3
+    delete_app = DeleteApp(tab3)
 
     # Placeholder in tab2
     # ttk.Label(tab2, text="Search Images by Work Order").pack(pady=20)
