@@ -26,7 +26,7 @@ class SearchApp:
         container = tk.Frame(parent)
         container.pack(pady=10)
 
-        self.canvas = tk.Canvas(container, width=600, height=600, bg='white', highlightthickness=2, highlightbackground='purple', bd=2, relief='solid')
+        self.canvas = tk.Canvas(container, width=500, height=500, bg='white', highlightthickness=2, highlightbackground='purple', bd=1, relief='solid')
         self.canvas.grid(row=0, column=0)
 
         self.v_scrollbar = ttk.Scrollbar(container, orient=tk.VERTICAL, command=self.canvas.yview)
@@ -68,12 +68,12 @@ class SearchApp:
         for idx, (id, wo, img_blob, timestamp) in enumerate(records):
             image = Image.open(io.BytesIO(img_blob))
             self.current_images.append((image, f"{wo}_{id}.png"))
-            image.thumbnail((600, 600))  # Resize images max 400x400
+            image.thumbnail((500, 500))  # Resize images max 400x400
             photo = ImageTk.PhotoImage(image)
 
             lbl = tk.Label(self.results_frame, image=photo)
             lbl.image = photo  # keep a reference to prevent GC
-            lbl.grid(row=idx, column=0)
+            lbl.grid(row=idx, column=0, padx=2)
 
     def save_all_images(self):
         if not self.current_images:

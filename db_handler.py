@@ -29,11 +29,6 @@ class DBHandler:
         ''', (input_text, screenshot_path))
         conn.commit()
         conn.close()
-        # import sqlite3
-        # conn = sqlite3.connect(self.db_path)
-        # cursor = conn.cursor()
-        # cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-        # print("Tables in DB:", cursor.fetchall())
 
     def get_all_records(self):
         conn = sqlite3.connect(self.db_path)

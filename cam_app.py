@@ -7,7 +7,7 @@ from onvif import ONVIFCamera
 from zeep.exceptions import Fault
 import time
 from db_handler import DBHandler
-import os
+import io
 
 class CameraApp:
     def __init__(self, root, onvif_ip, onvif_port, username, password):
@@ -54,11 +54,14 @@ class CameraApp:
             self.parent.destroy()
             return
 
-        self.cap = cv2.VideoCapture(self.rtsp_url)
+        self.cap = cv2.VideoCapture(self.rtsp_url, cv2.CAP_FFMPEG)
 
         # Video display label
         self.label = tk.Label(self.parent, bd=2, relief="solid")
         self.label.pack(pady=10)
+
+        self.last_img_label = tk.Label(self.parent, text="Last Captured Image", bd=2, relief="groove")
+        self.last_img_label.pack(pady=(5, 10))
 
         self.update_frame()
 
@@ -105,9 +108,10 @@ class CameraApp:
                 return
 
             image_bytes = buffer.tobytes()
+            image = Image.open(io.BytesIO(image_bytes))
 
             # messagebox.showinfo("Saved", f"Screenshot saved to database")
-            return image_bytes
+            return image_bytes, image
         else:
             messagebox.showerror("Error", "No frame available to capture")
             return None
@@ -117,11 +121,16 @@ class CameraApp:
         now = time.time()
 
         # Step 3: Take screenshot and ask for confirmation
-        img = self.take_screenshot()
+        img, tempImg = self.take_screenshot()
         if img:
             self.awaiting_confirmation = True
             self.pending_image = img
             self.pending_work_order = wo_order
+            # Display temp Img
+            tempImg.thumbnail((400, 400))  # Resize for display
+            photo = ImageTk.PhotoImage(tempImg)
+            self.last_img_label.configure(image=photo)
+            self.last_img_label.buffer = photo 
 
             response = messagebox.askyesno("Confirm", "Are you sure you want to save this image?\nPress Enter again to confirm, or click 'No' to cancel.")
             if not response:
@@ -135,7 +144,10 @@ class CameraApp:
                 self.db.insert_record(self.pending_work_order, img)
                 messagebox.showinfo("Saved", f"Screenshot saved for Work Order")
                 self.clear_input()
+
                 return "break"
+        self.last_img_label.config(image=None)
+        self.last_img_label.image = None
 
 
 
