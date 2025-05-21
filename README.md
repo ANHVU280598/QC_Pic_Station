@@ -7,7 +7,6 @@ The QC Pic Station application is designed to simplify and improve the process o
 - [Installation](#installation)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
-- [Demo](#demo)
 
 ---
 
@@ -67,8 +66,4 @@ QC_PIC_STATION/
 ├── requirements.txt
 ├── search.py  
 └── README.md                       
-
 ```              
-## Demo Video
-
-👉 Watch the demo here: [YouTube Video](https://youtu.be/3eHyZe9wde4)
